@@ -52,80 +52,77 @@ const CheckLink = ({ version, name, report }: any) => {
   const myObject = { pathname: pathName, state: linkStatus } as {
     pathname: string;
   };
-  if (report === "Scorecard" && linkStatusLength !== 0) {
+  if (report === "ScoreCard" && linkStatusLength !== 0) {
+    return <Link to={myObject}>{linkStatus.score}</Link>;
+    // href={`/BeSLighthouse/bes_version_history/${version}/${name}`}
+  }
+  if (report === "Vulnerabilities" && linkStatusLength !== 0) {
+    return <Link to={myObject}>{linkStatus.score}</Link>;
+    // href={`/BeSLighthouse/bes_version_history/${version}/${name}`}
+  }
+  if (report === "License Compliance" && linkStatusLength !== 0) {
+    return <Link to={myObject}>{linkStatus.score}</Link>;
+    // href={`/BeSLighthouse/bes_version_history/${version}/${name}`}
+  }
+  if (report === "Dependencies" && linkStatusLength !== 0) {
     return <Link to={myObject}>{linkStatus.score}</Link>;
     // href={`/BeSLighthouse/bes_version_history/${version}/${name}`}
   }
   if (linkStatusLength !== 0) {
-    return <Link to={myObject}>Click here</Link>;
+    return <Link to={myObject}>{linkStatus.score}</Link>;
   }
   return (
     <Typography variant="subtitle1" color="inherit">
-      Not Available
+      --
     </Typography>
   );
 };
 
 function AssessmentReport({ title, name, version, ...other }: any) {
   const report: string[] = [
-    "Scorecard",
+    "ScoreCard",
     "Criticality Score",
-    "Sonarqube",
-    "Codeql",
-    "SBOM",
-    "Fossology",
-    "Fuzz Report",
-    "Snyk"
+    "Vulnerabilities",
+    "License Compliance",
+    "Dependencies"
   ];
   return (
-    <Card sx={{ height: "100%" }}>
-      <MKBox pt={3} px={3}>
-        <MKTypography variant="h5" fontWeight="medium">
-          {title}
-        </MKTypography>
-        <MKBox mt={0} mb={2}></MKBox>
-      </MKBox>
-      <MKBox p={2}>
-        <Grid item xs={12}>
-          {report.map((value, index) => {
+    
+    <Card sx={{ height: "100%" }} >
+      <Grid container p={3}>
+        
+        {report.map((value, index) => {
             return (
               <>
-                {dividerDiv(index)}
-                <Grid container direction="column">
-                  <Grid item>
-                    <Grid
-                      container
-                      alignItems="center"
-                      justifyContent="space-between"
-                    >
-                      <Grid item>
-                        <Typography variant="subtitle1" color="inherit">
+              <MKBox  color="white" p={3.5} borderRadius="lg">
+              
+              <Grid p={3} style={{backgroundColor: "red", borderRadius: 10}} >
+                  
+                    <Grid container alignItems="center" color="white" justifyContent="center">
+                      <Grid item justifyContent="center">
+                        <Typography variant="h6" color="black">
                           {value}
                         </Typography>
                       </Grid>
+                    </Grid>
+                    <Grid>
                       <Grid item>
-                        <Grid
-                          container
-                          alignItems="center"
-                          justifyContent="space-between"
-                        >
+                        <Grid container alignItems="center" color="white">
                           <Grid item>
-                            <CheckLink
-                              version={version}
-                              name={name}
-                              report={value}
-                            />
+                            <CheckLink version={version} name={name} report={value} />
                           </Grid>
                         </Grid>
                       </Grid>
                     </Grid>
-                  </Grid>
+                  
                 </Grid>
+              
+              </MKBox>
               </>
             );
           })}
+        
         </Grid>
-      </MKBox>
     </Card>
   );
 }
